@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Cleaner | Simple & Fast</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <h1>Text Cleaner</h1>
+            </div>
+            <p class="tagline">Paste &rarr; Clean &rarr; Copy</p>
+        </header>
+
+        <main>
+            <!-- Advanced Toolbar -->
+            <div class="toolbar-container">
+                <div class="toolbar-group">
+                    <span class="group-label">Format</span>
+                    <button class="tool-btn" data-action="smart-unwrap" title="Fix broken lines (PDFs)">Smart
+                        Unwrap</button>
+                    <button class="tool-btn" data-action="trim-space" title="Trim & Normalize Spaces">Trim
+                        Space</button>
+                    <button class="tool-btn" data-action="fix-quotes" title="Smart Quotes -> Straight">Fix
+                        Quotes</button>
+                </div>
+
+                <div class="toolbar-group">
+                    <span class="group-label">Transform</span>
+                    <button class="tool-btn" data-action="sent-case" title="Sentence case">Sent. Case</button>
+                    <button class="tool-btn" data-action="title-case" title="Title Case">Title Case</button>
+                    <button class="tool-btn" data-action="upper-case" title="UPPERCASE">WILD</button>
+                    <button class="tool-btn" data-action="sort-lines" title="Sort Lines A-Z">Sort</button>
+                </div>
+
+                <div class="toolbar-group">
+                    <span class="group-label">Clean</span>
+                    <button class="tool-btn" data-action="strip-html" title="Remove HTML Tags">No HTML</button>
+                    <button class="tool-btn" data-action="extract-emails" title="Extract Emails Only">Get
+                        Emails</button>
+                    <button class="tool-btn danger" id="clear-btn" title="Clear All Input">Clear</button>
+                </div>
+            </div>
+
+            <div class="editor-grid">
+                <div class="pane input-pane">
+                    <div class="pane-header">
+                        <span>Input</span>
+                        <div class="pane-actions">
+                            <button id="paste-btn" class="icon-btn" title="Paste from Clipboard">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2">
+                                    </path>
+                                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="input-text" placeholder="Paste messy text here..."></textarea>
+                </div>
+
+                <!-- Central Action Arrow (Visual Only now, actions are in toolbar) -->
+                <div class="arrow-column">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="arrow-icon">
+                        <path d="M13 5l7 7-7 7M5 12h15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+
+                <div class="pane output-pane">
+                    <div class="pane-header">
+                        <span>Result</span>
+                        <div class="pane-actions">
+                            <button id="copy-btn" class="primary-action-btn">
+                                <span>Copy</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                    <path
+                                        d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="output-text" readonly placeholder="Result will appear here..."></textarea>
+                </div>
+            </div>
+
+            <!-- Bottom Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-label">Words:</span>
+                    <span class="stat-value" id="stat-words">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Chars:</span>
+                    <span class="stat-value" id="stat-chars">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Lines:</span>
+                    <span class="stat-value" id="stat-lines">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Read Time:</span>
+                    <span class="stat-value" id="stat-time">0s</span>
+                </div>
+            </div>
+        </main>
+        </main>
+
+        <footer>
+            <div class="toast" id="toast">Copied to clipboard!</div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
